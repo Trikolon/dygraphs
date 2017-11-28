@@ -3224,8 +3224,12 @@ Dygraph.prototype.visibility = function() {
     this.attrs_.visibility = [];
   }
   // TODO(danvk): it looks like this could go into an infinite loop w/ user_attrs.
-  while (this.getOption("visibility").length < this.numColumns() - 1) {
+
+  // Tempfix: static limit
+  let i = 0;
+  while (i < 50 && (this.getOption("visibility").length < this.numColumns() - 1)) {
     this.attrs_.visibility.push(true);
+    i += 1;
   }
   return this.getOption("visibility");
 };
